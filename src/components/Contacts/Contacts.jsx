@@ -1,5 +1,5 @@
 import "./Contacts.css";
-import Contact from "../Contact/Contact";
+import Contact from "./Contact/Contact";
 import { useState, useEffect } from "react";
 
 const contacts = [
