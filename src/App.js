@@ -1,7 +1,7 @@
 import React from 'react';
 import profileImage from "./img/phone-ecran1.png";
 import './App.css';
-import Contacts from './components/Contacts';
+import Contacts from './components/Contacts.jsx';
 
 function App() {
   return (
