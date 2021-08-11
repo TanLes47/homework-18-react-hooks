@@ -1,3 +1,19 @@
-.male {
-	fill: aqua;
-}
+
+body {
+    margin: 0px;
+    background-color: rgb(0, 183, 255);
+  
+  }
+  
+  .img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .myInfo {
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  
+  

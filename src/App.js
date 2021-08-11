@@ -1,13 +1,18 @@
 import React from 'react';
 import profileImage from "./img/phone-ecran1.png";
 import './App.css';
-import Contacts from './components/Contacts.jsx';
+
+
+
+
+
 
 function App() {
   return (
     <div className="App">
-      <img src={profileImage} alt="profile-image"/>
-      <Contacts/>
+    <h1 class="myInfo">Мої контакти</h1>
+    <img src={profileImage} alt="profile-image" class="img"/>
+    
     </div>
   );
 }
