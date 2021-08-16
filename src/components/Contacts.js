@@ -1,149 +1,139 @@
 import React from "react";
-import Contact from "./Contact";
+import Contact from Contact.js;
+import React, { useState, useEffect } from "react";
 
 
-const contacts = [{
-   id: 0,
+const contacts = [
+  {
     firstName: "Барней",
     lastName: "Стинсовський",
-   phone: "+380956319521",
-    gender: "male"
-}, {
-    id: 1,
+    phone: "+380956319521",
+    gender: "male",
+  },
+  {
     firstName: "Робін",
-   lastName: "Щербатська",
+    lastName: "Щербатська",
     phone: "+380931460123",
-   gender: "female"
-}, {
-    id: 2,
+    gender: "female",
+  },
+  {
     firstName: "Анонімний",
     lastName: "Анонімус",
     phone: "+380666666666",
-}, {
-   id: 3,
+  },
+  {
     firstName: "Лілія",
     lastName: "Олдровна",
     phone: "+380504691254",
-    gender: "female"
-}, {
-    id: 4,
+    gender: "female",
+  },
+  {
     firstName: "Маршен",
     lastName: "Еріксонян",
     phone: "+380739432123",
-    gender: "male"
-}, {
-    id: 5,
-   firstName: "Теодор",
+    gender: "male",
+  },
+  {
+    firstName: "Теодор",
     lastName: "Мотсбес",
-   phone: "+380956319521",
-    gender: "male"
-}];
+    phone: "+380956319521",
+    gender: "male",
+  },
+];
 
-const Contacts = () => {
-    const initialState = [true, true, true];
-    const [items, setItems] = useState(contacts);
-    const [search, setSearch] = useState("");
-    const [checked, setChecked] = useState(initialState);
-    const genders = ["male", "female", undefined];
-    const inputItems = [
-      {
-        id: "checkboxOne",
-        value: "0",
-        checked: checked[0],
-        labelhtml: "male",
-      },
-      {
-        id: "checkboxTwo",
-        value: "1",
-        checked: checked[1],
-        labelhtml: "female",
-      },
-      {
-        id: "checkboxThree",
-        value: "2",
-        checked: checked[2],
-        labelhtml: "not specifided",
-      },
-    ];
-    const onChangeHandler = (e) => {
-      const actualChecked = checked.map((item, index) =>
-        index === +e.target.value ? (item = e.target.checked) : item
-      );
-      setChecked(actualChecked);
-    };
-  
-    const handleSearchChange = (e) => {
-      setSearch(e.target.value);
-    };
-  
-    useEffect(() => {
-      const checkedContacts = [];
-      checked.forEach((item, index) => {
-        if (item) {
-          contacts.forEach((contact) => {
-            if (contact.gender === genders[index]) {
-              checkedContacts.push(contact);
-            }
-          });
-        }
-      });
-      setItems(checkedContacts);
-    }, [checked]);
-  
-    useEffect(() => {
-      const filteredContacts = contacts.filter((contact) => {
-        return (
-          contact.lastName.toLowerCase().includes(search.toLowerCase()) ||
-          contact.firstName.toLowerCase().includes(search.toLowerCase()) ||
-          contact.phone.includes(search)
-        );
-      });
-      setItems(filteredContacts);
-    }, [search]);
-  
-    return (
-      <div className="container_contacts">
-        <div className="contacts-header">
-          <div className="search-box">
-            <input
-              onChange={handleSearchChange}
-              placeholder="Search contacts"
-              className="search-input"
-              type="text"
-              id="search"
-              value={search}
-            ></input>
-          </div>
-          <div className="checkbox">
-            <ul className="ks-cboxtags">
-              {inputItems.map((item) => (
-                <li key={item.id}>
-                  <input
-                    onChange={onChangeHandler}
-                    type="checkbox"
-                    id={item.id}
-                    value={item.value}
-                    checked={item.checked}
-                  ></input>
-                  <label htmlFor={item.id}> {item.labelhtml}</label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="contacts-content">
-          {items.map((contact) => (
-            <Contact {...contact} key={contact.id} />
-          ))}
-        </div>
-        <div className="contacts-footer">
-          <button>
-            <img className="footer-icon" src={newContact} alt="New contact" /> Add
-            contact
-          </button>
-        </div>
-      </div>
+const inputItems = [
+  {
+    id: "female",
+    label: "👩",
+  },
+  {
+    id: "male",
+    label: "👨",
+  },
+  {
+    id: "other",
+    label: "?",
+  },
+];
+
+const [users, setUsers] = useState(contacts);
+const [searchTerm, setSearchTerm] = useState(contacts);
+
+useEffect(getFiltered, []);
+useEffect(getGender, [searchTerm]);
+
+function getGender() {
+  let filteredFemale = [];
+  let filteredMale = [];
+  let filteredOther = [];
+  if (document.getElementById("female").checked) {
+    filteredFemale = filteredFemale.concat(
+      searchTerm.filter((el) => el.gender === "female")
     );
-  };
-  
-export default Contacts;
+  }
+  if (document.getElementById("male").checked) {
+    filteredMale = filteredMale.concat(
+      searchTerm.filter((el) => el.gender === "male")
+    );
+  }
+  if (document.getElementById("other").checked) {
+    filteredOther = filteredOther.concat(
+      searchTerm.filter((el) => el.gender != "male" && el.gender != "female")
+    );
+  }
+  setUsers([
+    ...new Set(filteredFemale.concat(filteredMale).concat(filteredOther)),
+  ]);
+}
+
+function getFiltered() {
+  let input = document.getElementById("search").value;
+  const filteredLastName = contacts.filter(
+    (el) => el.lastName.toLowerCase().indexOf(input.toLowerCase()) !== -1
+  );
+  const filteredFistName = contacts.filter(
+    (el) => el.firstName.toLowerCase().indexOf(input.toLowerCase()) !== -1
+  );
+  const filteredPhone = contacts.filter(
+    (el) => el.phone.toLowerCase().indexOf(input.toLowerCase()) !== -1
+  );
+  let filtered = [
+    ...new Set(
+      filteredLastName.concat(filteredFistName).concat(filteredPhone)
+    ),
+  ];
+
+  setSearchTerm(filtered);
+}
+
+return (
+  <div className="phone">
+    <input
+      type="text"
+      placeholder="🔍 Пошук..."
+      id="search"
+      onChange={getFiltered}
+    />
+    <div className="filter">
+      {inputItems.map((item) => (
+        <div className="check">
+          <input
+            type="checkbox"
+            id={item.id}
+            key = {item.id}
+            defaultChecked={true}
+            onChange={getGender}
+          />
+          <p>{item.label}</p>
+        </div>
+      ))}
+    </div>
+    <div className="contacts-list">
+      {users.map((user) => (
+        <Contact {...user} key={user.id} />
+          
+      ))}
+    </div>
+  </div>
+);
+export default contacts;

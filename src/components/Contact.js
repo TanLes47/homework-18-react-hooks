@@ -1,26 +1,50 @@
 import React from "react";
-//import telicon from "../images/tel-icon.jpg";
 
-const Contact = (contact) => {
+
+
+function Contact(user) {
+  function getImg() {
+    if (user.gender === "female") {
+      return (
+        <img
+          className="avatar"
+          src="https://image.flaticon.com/icons/png/512/2922/2922554.png"
+          alt="female"
+        />
+      );
+    } else if (user.gender === "male") {
+      return (
+        <img
+          className="avatar"
+          src="https://image.flaticon.com/icons/png/512/265/265674.png"
+          alt="male"
+        />
+      );
+    } else {
+      return (
+        <img
+          className="avatar"
+          src="https://image.flaticon.com/icons/png/512/1077/1077012.png"
+          alt="?"
+        />
+      );
+    }
+  }
+
   return (
-    <div className="contact-item">
-      <div className="contact_photo">
-        <img className="photo" src={contact.photo} alt="contactImage" />
-      </div>
-      <div className="contact_info">
-        <div className="contact_name">
-          <span>{contact.firstName}</span>
-          <span>{contact.lastName}</span>
-          <span className="contact-gender">{contact.gender}</span>
+    <div className="contact">
+      {getImg()}
+      <div>
+        <div className="fullname">
+          <p>{user.firstName}</p>
+          <p>{user.lastName}</p>
         </div>
-        <div className="contact_phone">
-          <span>{contact.phone}</span>
-        </div>
-      </div>
-      <div className="telephone_icon">
-        <img className="icon" src={telicon} alt="icon" />
+        <a className="number" href="tel:{user.phone}">
+          {user.phone}
+        </a>
       </div>
     </div>
   );
-};
+}
+
 export default Contact;
