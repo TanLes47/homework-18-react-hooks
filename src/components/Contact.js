@@ -1,8 +1,6 @@
 import React from "react";
 
-
-
-function Contact(user) {
+export default function Contact(user) {
   function getImg() {
     if (user.gender === "female") {
       return (
@@ -39,12 +37,8 @@ function Contact(user) {
           <p>{user.firstName}</p>
           <p>{user.lastName}</p>
         </div>
-        <a className="number" href="tel:{user.phone}">
-          {user.phone}
-        </a>
+        <p>{user.phone}</p>
       </div>
     </div>
   );
 }
-
-export default Contact;
