@@ -1,44 +1,32 @@
-import React from "react";
+import React from 'react';
+import './style/Contacts.css';
+import telephone from './assets/phone.png';
+import man from './assets/man.png';
+import woman from './assets/woman.png';
+import anonymous from './assets/anonymous.png';
 
-export default function Contact(user) {
-  function getImg() {
-    if (user.gender === "female") {
-      return (
-        <img
-          className="avatar"
-          src="https://image.flaticon.com/icons/png/512/2922/2922554.png"
-          alt="female"
-        />
-      );
-    } else if (user.gender === "male") {
-      return (
-        <img
-          className="avatar"
-          src="https://image.flaticon.com/icons/png/512/265/265674.png"
-          alt="male"
-        />
-      );
-    } else {
-      return (
-        <img
-          className="avatar"
-          src="https://image.flaticon.com/icons/png/512/1077/1077012.png"
-          alt="?"
-        />
-      );
-    }
-  }
-
-  return (
-    <div className="contact">
-      {getImg()}
-      <div>
-        <div className="fullname">
-          <p>{user.firstName}</p>
-          <p>{user.lastName}</p>
-        </div>
-        <p>{user.phone}</p>
-      </div>
-    </div>
-  );
+const Contact = ({ firstName, lastName, phone, gender }) => {
+    return (
+        <>
+            <div className='container'>
+                <div className='main_info'>
+                    <div className='icon'>
+                        <img src={gender === 'male' ? man : gender === 'female' ? woman : anonymous} alt='' />
+                    </div>
+                    <div className='info'>
+                        <div className='name'> {firstName + ' ' + lastName}
+                        </div>
+                        <div className='number_phone'> {phone}
+                        </div>
+                    </div>
+                    <div className='phone'>
+                        <img src={telephone} alt='' />
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </>
+    )
 }
+
+export default Contact;
